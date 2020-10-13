@@ -156,10 +156,10 @@ Im Rahmen des Lernprozesses eines \ac{NN} werden die Gewichte und Bias der einze
 Um diesen Fehler bestimmen zu können, wird eine Verlustfunktion angewendet. Ein einfaches Beispiel einer Verlustfunktion basiert auf der mittleren quadratischen Abweichung.
 
 \begin{equation} \label{eq:mse}
-    L(w,b) = \frac{1}{2} \sum (t-p)^2
+    L(w,b) = \frac{1}{2} \sum (y-\hat{y})^2
 \end{equation}
 
-In Gleichung \ref{eq:mse} werden die Gewichte mit \textit{w} und die Bias mit \textit{b} bezeichnet. Zusätzlich werden die wahren Klassen durch \textit{t} und die Ausgabe des \ac{NN} durch \textit{p} dargestellt. \todo{Prüfen ob variablen konsistent verwendet werden}
+In Gleichung \ref{eq:mse} werden die Gewichte mit \textit{w} und die Bias mit \textit{b} bezeichnet. Zusätzlich werden die wahren Klassen durch \textit{y} und die Ausgabe des \ac{NN} durch \textit{\^{y}} dargestellt. \todo{Prüfen ob variablen konsistent verwendet werden}
 
 
 Um den Fehler des \ac{NN} zu minimieren, muss der globale Tiefpunkt der Verlustfunktion bestimmt werden. Bei Funktionen mit einer Vielzahl von Parametern, ist es zu komplex, diese Aufgabe analytisch zu lösen. \textit{\ac{GD}} stellt einen iterativen Prozess dar, sich dem nächsten Minimum zu nähern. Bildlich kann dieser Vorgang mit einem Wanderer, der vom Gipfel eines Berges absteigen möchte, verglichen werden. Geht dieser von seinem aktuellen Standpunkt ein paar Schritte in die entgegengesetzte Richtung der steilsten Stelle am Berg und wiederholt diesen Vorgang immer wieder, wandert er immer weiter ins Tal. Betrachtet man Abbildung \ref{fig:quadLoss}, würde der Wanderer in einem der braunen Quadrate beginnen und sich Schritt für Schritt tiefer bis zum blauen Bereich vorarbeiten. 
@@ -226,19 +226,55 @@ Wie im letzten Abschnitt beschrieben, müssen für die Anwendung von \ac{GD}  $\
 \end{equation}
 
 \begin{figure}[H]
-    \centering
-    \caption[]{Einfaches Neuronal Network mit nur einem Neuron pro Layer}
-	\label{fig:simpleNetwork}
-    \includegraphics[width=1\textwidth]{1-1-1-network.pdf}
+	\centering
+	\begin{tikzpicture}[x=1.5cm, y=1.5cm,  >=stealth]
+        \tikzstyle{unit}=[draw,shape=circle,minimum size=1.2cm]
+        \tikzstyle{weight} =[draw, shape=rectangle, minimum size=.8cm]
+
+        \node[unit](I) at (0, 2){$a^{(L-2)}$};
+        \node[weight](w1) at (2,2){$w^{(L-2)}$};
+        \node[unit](H) at (4, 2){$a^{(L-1)}$};
+        \node[weight](w2) at (6,2){$w^{(L-1)}$};
+        \node[unit](O) at (8, 2){$a^L$};
+        
+        \draw[->] (I) -- (w1);
+        \draw[->] (w1) -- (H);
+        \draw[->] (H) -- (w2);
+        \draw[->] (w2) -- (O);
+        
+        \end{tikzpicture}
+	\caption[]{Einfaches Neuronal Network mit nur einem Neuron pro Layer}
+    \label{fig:simpleNetwork}
     Quelle: Eigene Darstellung, 2020
 \end{figure}
 
 
 \begin{figure}[H]
     \centering
+    \begin{tikzpicture}[x=1.5cm, y=1.5cm,  >=stealth]
+        \tikzstyle{unit}=[draw,shape=circle,minimum size=1.2cm]
+        \tikzstyle{weight} =[draw, shape=rectangle, minimum size=.8cm]
+
+        \node[weight](w) at (0, 2){$w^{(L-1)}$};
+        \node[weight](a) at (0, 1){$a^{(L-1)}$};
+        \node[weight](b) at (0,0){$b^{(L-1)}$};
+        \node[weight](z) at (2, 1){$z^{(L)}$};
+        \node[weight](aL) at (4,1){$a^{(L)}$};
+        \node[unit](c) at (6,1){$C$};
+        \node[weight](y) at (6,0){$y$};
+
+        \draw[->] (w) -- (z);
+        \draw[->] (a) -- (z);
+        \draw[->] (b) -- (z);
+        \draw[->] (z) -- (aL);
+        %\path [line] (aL) -- node [text width=2.5cm,midway,above ]{$\hat{y}$} (c);
+        \draw[->] (aL) -> node [text width=2.5cm,midway,above,align=center ] {$\hat{y}$} (c);
+
+        \draw[->] (y) -- (c);
+
+        \end{tikzpicture}
     \caption[]{Vereinfachte Darstellung der Einflüsse auf die Verlustfunktion}
-	\label{fig:unfoldedCost}
-    \includegraphics[width=1\textwidth]{unfolded_network.pdf}
+    \label{fig:unfoldedCost}
     Quelle: Eigene Darstellung, 2020
 \end{figure}
 
