@@ -232,8 +232,10 @@ Wie im letzten Abschnitt beschrieben, müssen für die Anwendung von \ac{GD}  $\
         \tikzstyle{weight} =[draw, shape=rectangle, minimum size=.8cm]
 
         \node[unit](I) at (0, 2){$a^{(L-2)}$};
+        \node[unit](b1) at (0,0.5){$b^{(L-2)}$};
         \node[weight](w1) at (2,2){$w^{(L-2)}$};
         \node[unit](H) at (4, 2){$a^{(L-1)}$};
+        \node[unit](b2) at (4,0.5){$b^{(L-1)}$};
         \node[weight](w2) at (6,2){$w^{(L-1)}$};
         \node[unit](O) at (8, 2){$a^L$};
         
@@ -241,6 +243,8 @@ Wie im letzten Abschnitt beschrieben, müssen für die Anwendung von \ac{GD}  $\
         \draw[->] (w1) -- (H);
         \draw[->] (H) -- (w2);
         \draw[->] (w2) -- (O);
+        \draw[->] (b1) -- (w1);
+        \draw[->] (b2) -- (w2);
         
         \end{tikzpicture}
 	\caption[]{Einfaches Neuronal Network mit nur einem Neuron pro Layer}
