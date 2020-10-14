@@ -19,7 +19,7 @@ Die grundlegenden Bausteine von \ac{NN} sind Perceptron und wurden 1958 von Rose
   },
 }
 
-\begin{figure}[H]
+\begin{figure}[t]
 	\centering
 	\begin{tikzpicture}[x=1.5cm, y=1.5cm,  >=stealth]
         \tikzstyle{unit}=[draw,shape=circle,minimum size=1.2cm]
@@ -76,7 +76,7 @@ Neben der Sigmoid Funktion werden in modernen \ac{NN} häufig die ReLu Funktion 
   = \frac{e^{2z} - 1} {e^{2z} + 1}
 \end{equation}
 
-\begin{figure}[H]
+\begin{figure}[t]
     \centering
     \caption[]{Darstellung der Sigmoid-, ReLU- und tanh Funktion}
 	\label{fig:activationfunctions}
@@ -100,7 +100,7 @@ Ein \ac{NN} besteht aus mehreren, verschalteten Neuronen. Diese werden in Layern
   },
 }
 
-\begin{figure}[H]
+\begin{figure}[t]
 	\centering
 	\begin{tikzpicture}[x=1.5cm, y=1.5cm,  >=stealth]
 
@@ -166,7 +166,7 @@ Um den Fehler des \ac{NN} zu minimieren, muss der globale Tiefpunkt der Verlustf
 
 Mathematisch gesehen kann dies als eine Funktion \textit{L(v)} gesehen werden, wobei \textit{v} eine beliebige Anzahl von Parametern darstellt. Für eine bessere Übersichtlichkeit, wird im folgendem mit zwei Parametern, \textit{v\textsubscript{1}} und \textit{v\textsubscript{2}} gerechnet.
 
-\begin{figure}[H]
+\begin{figure}[t]
     \centering
     \caption[]{Beispiel quadratische Verlustfunktion mit den Parametern v\textsubscript{1} und v\textsubscript{2}}
 	\label{fig:quadLoss}
@@ -225,7 +225,7 @@ Wie im letzten Abschnitt beschrieben, müssen für die Anwendung von \ac{GD}  $\
     \frac{\partial E}{ \partial w_{jk}}
 \end{equation}
 
-\begin{figure}[H]
+\begin{figure}[t]
 	\centering
 	\begin{tikzpicture}[x=1.5cm, y=1.5cm,  >=stealth]
         \tikzstyle{unit}=[draw,shape=circle,minimum size=1.2cm]
@@ -249,7 +249,7 @@ Wie im letzten Abschnitt beschrieben, müssen für die Anwendung von \ac{GD}  $\
 \end{figure}
 
 
-\begin{figure}[H]
+\begin{figure}[t]
     \centering
     \begin{tikzpicture}[x=1.5cm, y=1.5cm,  >=stealth]
         \tikzstyle{unit}=[draw,shape=circle,minimum size=1.2cm]
