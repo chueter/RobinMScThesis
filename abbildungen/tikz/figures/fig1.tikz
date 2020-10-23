@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (-22, 6.75) {bla};
+		\node [style=none] (1) at (-19, 6.5) {};
+		\node [style=none] (2) at (-19, 6.5) {test};
+		\node [style={white_circle}] (5) at (-6, 1.75) {b_c};
+		\node [style={white_circle}] (6) at (-8.75, 1.75) {a_bc};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=new edge style 0] (6) to (5);
+	\end{pgfonlayer}
+\end{tikzpicture}

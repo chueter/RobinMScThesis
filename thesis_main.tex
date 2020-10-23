@@ -72,8 +72,11 @@
 
 \usepackage{neuralnetwork}
 \usepackage{tikz}
+\usepackage{booktabs}
 \usetikzlibrary{positioning}
 \usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{matrix}
+
 
 
 %-----------------------------------
@@ -306,6 +309,8 @@ mincrossrefs = 1
 %-----------------------------------
 % Start the document here:
 %-----------------------------------
+\usepackage{fnpct}
+\AdaptNoteOpt\footcite\multfootcite
 \begin{document}
 
 \pagenumbering{Roman}								% Seitennumerierung auf römisch umstellen
@@ -434,7 +439,7 @@ mincrossrefs = 1
 % Die Option heading=bibintoc würde die Internetquelle als eigenen Eintrag im
 % Inhaltsverzeicnis anzeigen.
 %\printbibliography[type=online,heading=bibintoc,title={Internetquellen}]
-\printbibliography[type=online,title={\langde{Internetquellen}\langen{Internet sources}}]
+\printbibliography[type=online,title={Internetquellen}]
 
 \input{kapitel/anhang/erklaerung}
 \end{document}
