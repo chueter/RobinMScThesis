@@ -1,8 +1,8 @@
 
 \subsection{Neural Networks} \label{sec:NN}
-In den letzten Jahren gab es eine Vielzahl von Fortschritten durch Computersysteme, die durch die Allgemeinheit unter dem Begriff \ac{KI} zusammen gefasst werden. So konnte zum Beispiel AlphaGo einen der weltweit besten Spieler in dem Brettspiel Go schlagen und das System DeepFace ist in der Lage, menschliche Gesichter nahezu auf menschlichen Niveau erkennen zu können.\footcites[Vgl.][]{spiegelGoogleComputerAlphaGo2016}\footcite[Vgl.][]{taigman2014deepface}
+In den letzten Jahren gab es eine Vielzahl von Fortschritten durch Computersysteme, die häufig unter dem Begriff \ac{KI} zusammen gefasst werden. So konnte zum Beispiel AlphaGo einen der weltweit besten Spieler in dem Brettspiel Go schlagen und das System DeepFace ist in der Lage, menschliche Gesichter nahezu auf menschlichen Niveau erkennen zu können.\footcites[Vgl.][]{spiegelGoogleComputerAlphaGo2016}\footcite[Vgl.][]{taigman2014deepface}
 
-Systeme die als \ac{KI} bezeichnet werden, sind häufig in der Lage, Aufgaben zu bewältigen die bisher ausschließlich durch das menschliche Gehirn bearbeitet werden konnten. Neben den oben genannten Beispielen zählt hier auch das Erkennen von Bildern oder Sprache dazu. Damit Computer diese Aufgaben erledigen können, haben Wissenschaftler sich vom menschlichen bzw. biologischen Gehirn inspirieren lassen. Systeme die auf dieser Grundlage basieren und einige der Vorgehensweisen des Gehirnen imitieren, werden als \ac{NN} bezeichnet.
+Systeme die als \ac{KI} bezeichnet werden, sind häufig in der Lage, Aufgaben zu bewältigen, die bisher ausschließlich durch das menschliche Gehirn bearbeitet werden konnten. Neben den oben genannten Beispielen zählt hier auch das Erkennen von Bildern oder Sprache dazu. Damit Computer diese Aufgaben erledigen können, haben Wissenschaftler sich vom menschlichen bzw. biologischen Gehirn inspirieren lassen. Systeme, die auf dieser Grundlage basieren und einige der Vorgehensweisen des Gehirnen imitieren, werden als \ac{NN} bezeichnet.
 
 \subsubsection{Aufbau}
 Die grundlegenden Bausteine von \ac{NN} sind Perceptron und wurden 1958 von Rosenblatt beschrieben.\footcite[Vgl.][]{rosenblattPerceptronProbabilisticModel1958} Als Grundlage verwendete er hierbei unter anderem die Arbeit von McCulloch und Pitts.\footcite[Vgl.][]{mccullochLogicalCalculusIdeas1943}
@@ -50,9 +50,9 @@ Die grundlegenden Bausteine von \ac{NN} sind Perceptron und wurden 1958 von Rose
     Quelle: Eigene Darstellung, 2020
 \end{figure}
 
-Ein Perceptron kann zwischen $1$ und $n$ Eingangssignalen sowie einen negativen Bias Term\footnote{Einige Defintionen schreiben nicht vor, dass der Bias negativ sein muss. Stattdessen wird dieser im weiteren Vorgehen subtrahiert statt summiert zu werden} $b$ erhalten und hieraus ein Ausgangssignal - auch Aktivierung genannt - erzeugen. Für das Ausgangssignal werden alle Eingangssignale jeweils mit einem eigenen - als Gewicht bezeichneten - Faktor multipliziert (siehe Abbildung \ref{fig:perceptron}). Die Ergebnisse werden anschließend zusammen mit dem Bias summiert. Ist die Summe kleiner oder gleich $0$, ist der Ausgangswert ebenfalls $0$, ansonsten beträgt der Ausgangswert $1$. Der Bias stellt also den Schwellwert dar, denn die gewichtete Summe überschreiten muss, damit das Ausgangssignal $1$ lautet. 
+Ein Perceptron kann zwischen $1$ und $n$ Eingangssignalen sowie einen negativen Bias Term\footnote{Einige Defintionen schreiben nicht vor, dass der Bias negativ sein muss. Stattdessen wird dieser im weiteren Vorgehen subtrahiert statt summiert zu werden} $b$ erhalten und hieraus ein Ausgangssignal - auch Aktivierung genannt - erzeugen. Für das Ausgangssignal werden alle Eingangssignale jeweils mit einem eigenen - als Gewicht bezeichneten - Faktor multipliziert (siehe Abbildung \ref{fig:perceptron}). Die Ergebnisse werden anschließend zusammen mit dem Bias summiert. Ist die Summe kleiner oder gleich $0$, ist der Ausgangswert ebenfalls $0$, ansonsten beträgt der Ausgangswert $1$. Der Bias stellt also den Schwellwert dar, den die gewichtete Summe überschreiten muss, damit das Ausgangssignal $1$ lautet. 
 
-Es ist möglich, ein Perceptron um eine Aktivierungsfunktion zu ergänzen, sodass das Ausgabesignal reelle Werte annehmen kann. Diese Erweiterung des Perceptron wird als Neuron bezeichnet. Weit verbreitet ist die Verwendung der Sigmoid Funktion (siehe Gleichung \ref{eq:sigmoid}). Bei der Anwendung einer Aktivierungsfunktion, häufig mit $\sigma$ dargestellt, wird die gewichtete Summe $z$ in die gewählte Funktion gegeben und das Ergebnis stellt das Ausgangssignal des Neuron da (siehe Gleichung \ref{eq:outputNeuron}).
+Es ist möglich, ein Perceptron um eine Aktivierungsfunktion zu ergänzen, sodass das Ausgabesignal reelle Werte annehmen kann. Diese Erweiterung des Perceptron wird als Neuron bezeichnet. Weit verbreitet ist die Verwendung der Sigmoid Funktion (siehe Gleichung \ref{eq:sigmoid}). Bei der Anwendung einer Aktivierungsfunktion, häufig mit $\sigma$ dargestellt, wird die gewichtete Summe $z$ in die gewählte Funktion gegeben und das Ergebnis stellt das Ausgangssignal des Neuron dar (siehe Gleichung \ref{eq:outputNeuron}).
 
 \begin{equation} \label{eq:sigmoid}
     \sigma (z) =  \frac{1}{1+e^{-z}}
@@ -62,7 +62,7 @@ Es ist möglich, ein Perceptron um eine Aktivierungsfunktion zu ergänzen, sodas
     a = \sigma (\sum_{i}{x_i w_i + b})
 \end{equation}
 
-Neben der Sigmoid Funktion werden in modernen \ac{NN} häufig die ReLu Funktion (Gleichung \ref{eq:ReLU}) oder die tanh Funktion (Gleichung \ref{eq:tanh}) verwendet. Alle drei werden in Abbildung \ref{fig:activationfunctions} gegenüber gestellt. Es ist zu erkennen, dass sowohl bei der Sigmoid Funktion, als auch bei der ReLU Funktion die untere Grenze des Wertebereichs bei $0$ liegt. Bei der tanh Funktion, liegt diese bei $-1$. Außerdem haben nur die Sigmoid- und tanh Funktion eine obere Grenze - beide 1 - definiert. ReLU kann jeden Wert größergleich $0$ annehmen. Verwendet man eine Aktivierungsfunktion, stellt der Bias kein Schwellwert mehr dar. Er ist als einziger Term in der Berechnung des Wertes der in die Aktivierungsfunktion gegeben wird von den Eingangswerten unabhängig und sorgt somit um eine konstante Verschiebung.
+Neben der Sigmoid Funktion werden in modernen \ac{NN} häufig die ReLu Funktion (Gleichung \ref{eq:ReLU}) oder die tanh Funktion (Gleichung \ref{eq:tanh}) verwendet. Alle drei werden in Abbildung \ref{fig:activationfunctions} gegenüber gestellt. Es ist zu erkennen, dass sowohl bei der Sigmoid Funktion, als auch bei der ReLU Funktion die untere Grenze des Wertebereichs bei $0$ liegt. Bei der tanh Funktion, liegt diese bei $-1$. Außerdem haben nur die Sigmoid- und tanh Funktion eine obere Grenze - beide 1 - definiert. ReLU kann jeden Wert größer gleich $0$ annehmen. Verwendet man eine Aktivierungsfunktion, stellt der Bias kein Schwellwert mehr dar. Er ist als einziger Term in der Berechnung des Wertes der in die Aktivierungsfunktion gegeben wird von den Eingangswerten unabhängig und sorgt somit um eine konstante Verschiebung.
 
 \begin{equation} \label{eq:ReLU}
     ReLU(z) = max(0,z)
@@ -82,7 +82,6 @@ Neben der Sigmoid Funktion werden in modernen \ac{NN} häufig die ReLu Funktion 
 \end{figure}
 
 Ein \ac{NN} besteht aus mehreren, verschalteten Neuronen. Diese werden in Layern angeordnet, welche typischerweise mit $1$ bis $N$ durchnummeriert werden. Layer 1 wird außerdem als Input Layer bezeichnet, da dieser die einzelnen Eingangswerte in das \ac{NN} darstellt. Layer N wiederum wird als Output Layer bezeichnet, da er das Ergebnis des \ac{NN} ausgibt. Alle Layer dazwischen (1 < $l$ < N) werden als Hidden Layer bezeichnet, da von außen weder direkt auf die Eingangssignale der Neuronen in diesen Layern Einfluss genommen werden kann, noch die Ausgabesignale dieser direkt ersichtlich sind. Jeder Layer kann dabei eine unterschiedliche Anzahl von Neuronen enthalten. Typischerweise sind die Neuronen in einem Layer mit allen Neuronen des vorherigen Layers verbunden, ist dies der Fall, wird der Layer auch \textit{Dense Layer} bezeichnet. Eine allgemeine Darstellung eines \ac{NN} mit drei Layern ist in Abbildung \ref{fig:multilayer-perceptron} dargestellt.
-
 \tikzset{%
   every neuron/.style={
     circle,
@@ -216,9 +215,8 @@ Ersetzt man \textit{v\textsubscript{1}} und \textit{v\textsubscript{2}} durch \t
 
 \subsubsection{Backpropagation}
 
-Wie im letzten Abschnitt beschrieben, müssen für die Anwendung von \ac{GD}  $\frac{\partial C}{ \partial w}$ und  $\frac{\partial C}{ \partial b}$ berechnet werden. Rumelhart et al. haben für eine schnelle und effiziente Berechnung dieser im Jahr 1986 den Backpropagation Algorithmus vorgeschlagen.\footcite[Vgl. ][S. 533 ff.]{rumelhart1986learning} Dieser stellt eine erweiterung der Delta-Regel auf \ac{NN} mit mehr als zwei Schichten dar.\todo[]{Quelle einfügen} Die Grundidee besteht darin, den Fehler des \ac{NN} auf die einzelnen Gewichte und Bias innerhalb des \ac{NN} zurückzuführen, so dass diese angepasst werden können. 
-%Im folgenden wird primär auf die Gewichte eingegangen, da die Berechnung für einen Bias als einfachere Form der Rechnung für Gewichte angesehen werden kann. 
-Formuliert man die Grundidee zum Beispiel für die Gewichte um, stellt sich die Frage, in wie sehr sich der Fehler des \ac{NN} ändert, wenn das Gewicht $w_{jk}$ angepasst wird (siehe Gleichung \ref{eq:defDeltaEdef}).
+Wie im letzten Abschnitt beschrieben, müssen für die Anwendung von \ac{GD}  $\frac{\partial C}{ \partial w}$ und  $\frac{\partial C}{ \partial b}$ berechnet werden. Rumelhart et al. haben für eine schnelle und effiziente Berechnung dieser im Jahre 1986 den Backpropagation Algorithmus vorgeschlagen.\footcite[Vgl. ][S. 533 ff.]{rumelhart1986learning} Dieser stellt eine Erweiterung der Delta-Regel auf \ac{NN} mit mehr als zwei Schichten dar.\todo[]{Quelle einfügen} Die Grundidee besteht darin, den Fehler des \ac{NN} auf die einzelnen Gewichte und Bias innerhalb des \ac{NN} zurückzuführen, so dass diese angepasst werden können. 
+Formuliert man die Grundidee zum Beispiel für die Gewichte um, stellt sich die Frage, inwiefern sich der Fehler des \ac{NN} ändert, wenn das Gewicht $w_{jk}$ angepasst wird (siehe Gleichung \ref{eq:defDeltaEdef}).
 
 \begin{equation} \label{eq:defDeltaEdef}
     \frac{\partial C}{ \partial w_{jk}}
@@ -291,7 +289,7 @@ In Abbildung \ref{fig:unfoldedCost} sind die Einflüsse auf die Verlustfunktion 
 
 %$a^{(L-1)}$ stellt hierbei einen Sonderfall da. Da dies die Aktivierung des vorherigen Layers ist, hängt diese wiederum von den drei selben Eingangssignalen - nur einen Layer vorher, also hier $w^{(L-2)}$, $a^{(L-2)}$ und $b^{(L-2)}$ - ab. Daher soll zunächst die Anpassung von $w^{(L-1)}$ und $b^{(L-1)}$ betrachtet werden.
 
-Wie in Gleichung \ref{eq:defDeltaEdef} dargestellt, muss der Fehler des \ac{NN} mittels partieller Ableitung auf jeden Einflussfaktor zurückgeführt werden. Hierbei wird die Kettenregel angewendet, die einzelnen Glieder kann man aus Abbildung \ref{fig:unfoldedCost} ablesen. Hierfür beginnt man bei dem Element dessen Anpassung vorgenommen werden soll, und wandert den Graph weiter, bis man bei $C$ angekommen ist. Die einzelnen Terme der Kettenregel bestehen dann aus der partiellen Ableitung des nächsten Elements im Pfad über das aktuelle Element. Geht man so - beginnend mit dem Element mit $w^{(L-1)}$ - vor, erhält man Gleichung \ref{eq:chainrule_simple_network}.
+Wie in Gleichung \ref{eq:defDeltaEdef} dargestellt, muss der Fehler des \ac{NN} mittels partieller Ableitung auf jeden Einflussfaktor zurückgeführt werden. Hierbei wird die Kettenregel angewendet, die einzelnen Glieder kann man aus Abbildung \ref{fig:unfoldedCost} ablesen. Hierfür beginnt man bei dem Element dessen Anpassung vorgenommen werden soll und wandert den Graph weiter, bis man bei $C$ angekommen ist. Die einzelnen Terme der Kettenregel bestehen dann aus der partiellen Ableitung des nächsten Elements im Pfad über das aktuelle Element. Geht man so - beginnend mit dem Element mit $w^{(L-1)}$ - vor, erhält man Gleichung \ref{eq:chainrule_simple_network}.
 
 \begin{equation} \label{eq:chainrule_simple_network}
     \frac{\partial C }{\partial w^{(L-1)}} =  
@@ -307,9 +305,9 @@ Berechnet man die entsprechenden Ableitungen, erhält man Gleichung \ref{eq:able
     2(a^{(L)}-y)
 \end{equation}
 
-Der vorderste Teil der rechten Seite der Gleichung ist die partielle Ableitung von der gewichteten Summe $z^{(L)}$ über das Gewicht $w^{(L-1)}$. Der mittlere Teil der Gleichung stellt die Ableitung der gewählten Aktivierungsfunktion $\sigma$ da und der hinterste Teil ist die Ableitung der gewählten Verlustfunktion, in Gleichung \ref{eq:ableitung_chainrule_simple} wurde hierfür Gleichung \ref{eq:mse} verwendet.
+Der vorderste Teil der rechten Seite der Gleichung ist die partielle Ableitung von der gewichteten Summe $z^{(L)}$ über das Gewicht $w^{(L-1)}$. Der mittlere Teil der Gleichung stellt die Ableitung der gewählten Aktivierungsfunktion $\sigma$ dar und der hinterste Teil ist die Ableitung der gewählten Verlustfunktion. In Gleichung \ref{eq:ableitung_chainrule_simple} wurde hierfür Gleichung \ref{eq:mse} verwendet.
 
-Für die Berechnung des Bias $b^{(L-1)}$ kann der Pfad von $C$ bis $z^{(L)}$ übernommen werden. Es ändert sich also nur etwas im vordersten Glied der Gleichungen \ref{eq:chainrule_simple_network} und \ref{eq:ableitung_chainrule_simple}. Außerdem ist der Bias eine Konstanten, seine Ableitung ($1$)  wird nicht dargestellt.
+Für die Berechnung des Bias $b^{(L-1)}$ kann der Pfad von $C$ bis $z^{(L)}$ übernommen werden. Es ändert sich also nur etwas im vordersten Glied der Gleichungen \ref{eq:chainrule_simple_network} und \ref{eq:ableitung_chainrule_simple}. Außerdem ist der Bias eine Konstante, seine Ableitung ($1$)  wird nicht dargestellt.
 
 \begin{equation}
     \frac{\partial C }{\partial b^{(L-1)}} =  
@@ -329,7 +327,7 @@ Die Ergebnisse für $\frac{\partial C }{\partial w^{(L-1)}}$  bzw. $\frac{\parti
     2(a^{(L)}-y)
 \end{equation}
 
-Nachdem nun alle Einflüsse auf den Output Layer berechnet sind, kann ein Schritt weiter zurück gegangen werden. Im \ac{NN} aus Abbildung \ref{fig:simpleNetwork} ist dies der Input Layer $L-2$. Die explizite Darstellung aller Einflüsse inklusive diesem Layer ist in Abbildung \ref{fig:unfoldedCost2} dargestellt. Wie zu sehen ist, wurde nur die zwei Spalten ganz links zum Diagram aus Abbildung \ref{fig:unfoldedCost} hinzugefügt. Dank der Kettenregel, spiegelt sich dies auch in den Gleichungen für die neuen Elemente $w^{(L-2)}$, $a^{(L-2)}$, $b^{(L-2)}$ und $z^{(L-1)}$ wieder. In Gleichung \ref{eq:calcWL-2}  die Berechnung für den Einfluss des Gewichts $w^{(L-2)}$ dargestellt.
+Nachdem nun alle Einflüsse auf den Output Layer berechnet sind, kann ein Schritt weiter zurück gegangen werden. Im \ac{NN} aus Abbildung \ref{fig:simpleNetwork} ist dies der Input Layer $L-2$. Die explizite Darstellung aller Einflüsse inklusive diesem Layer ist in Abbildung \ref{fig:unfoldedCost2} dargestellt. Wie zu sehen ist, wurden nur die zwei Spalten ganz links zum Diagramm aus Abbildung \ref{fig:unfoldedCost} hinzugefügt. Dank der Kettenregel, spiegelt sich dies auch in den Gleichungen für die neuen Elemente $w^{(L-2)}$, $a^{(L-2)}$, $b^{(L-2)}$ und $z^{(L-1)}$ wieder. In Gleichung \ref{eq:calcWL-2} ist die Berechnung für den Einfluss des Gewichts $w^{(L-2)}$ dargestellt.
 
 \begin{equation} \label{eq:calcWL-2}
     \frac{\partial C }{\partial w^{(L-2)}} = 
@@ -404,7 +402,7 @@ Größere Änderungen gibt es für den Einfluss der Aktivierung $a_{k}^{(L-1)}$.
         \frac{\partial C}{\partial a_{k}^{(L-1)}}=\sum_{j=1}^{N_{L}} \frac{\partial z_{j}^{(L)}}{\partial a_{k}^{(L-1)}} \frac{\partial a_{j}^{(L)}}{\partial z_{j}^{(L)}} \frac{\partial C}{\partial a_{j}^{(L)}} \\
 \end{equation}
 
-Neben dem hinzufügen der neuen Notation mit Indizes und der Summe, gibt es keine Änderungen zum Fall im einfachen \ac{NN}. Dies lässt sich auch beobachten, wenn ein weiteren Schritt zurück Gegangen wird. Also Elemente im Layer $L-2$ betrachtet werden. Für das Gewicht $w_{j k}^{(L-2)}$ wird die Formel in Gleichung \ref{eq:infWL-2} dargestellt. Genau wie beim einfachen \ac{NN}, wurde das Ergebnis des vorherigen Layers um zwei weitere Terme ergänzt. Ähnlich sieht es bei der Aktivierung aus, hier enthält der letzte Term in Summenzeichen aus Gleichung \ref{eq:infALayer1} immer den Weg vom aktuellen Layer bis zu $C$, so dass die zwei anderen Terme in der Summe nur auf den aktuellen Layer angepasst werden müssen. 
+Neben dem Hinzufügen der neuen Notation mit Indizes und der Summe (Ich gehe mal davon aus das hier klar ist welche Summe gemeint ist), gibt es keine Änderungen zum Fall im einfachen \ac{NN}. Dies lässt sich auch beobachten, wenn ein weiterer Schritt zurück gegangen wird. Also Elemente im Layer $L-2$ betrachtet werden. Für das Gewicht $w_{j k}^{(L-2)}$ wird die Formel in Gleichung \ref{eq:infWL-2} dargestellt. Genau wie beim einfachen \ac{NN}, wurde das Ergebnis des vorherigen Layers um zwei weitere Terme ergänzt. Ähnlich sieht es bei der Aktivierung aus, hier enthält der letzte Term in Summenzeichen aus Gleichung \ref{eq:infALayer1} immer den Weg vom aktuellen Layer bis zu $C$, so dass die zwei anderen Terme in der Summe nur auf den aktuellen Layer angepasst werden müssen. 
 
 \begin{equation} \label{eq:infWL-2}
     \frac{\partial C}{\partial w_{j k}^{(L-2)}}=\frac{\partial z_{j k}^{(L-1)}}{\partial w_{j k}^{(L-2)}} \frac{\partial a_{j}^{(L-1)}}{\partial z_{j}^{(L-1)}} \frac{\partial C}{\partial a_{j}^{(L-1)}}
@@ -416,5 +414,5 @@ Verwendet man die hergeleiteten Gleichungen und erweitert sie gegebenenfalls fü
     \item Durchführen eines Vorwärtsdurchlaufs um die Ausgabe des Output Layers zu erhalten (\textit{\^{y}})
     \item Ausrechnen der Verlustfunktion ($C(w,b)$), um den Fehler des \ac{NN} zu erhalten
     \item Berechnen der Gradienten von $C(w,b)$ im Bezug auf alle Gewichte und Bias im \ac{NN}
-    \item Anpassen der Gewichte und Bias im Netzwerk anhand der berechneten Gradienten und den Ausgangswerte
+    \item Anpassen der Gewichte und Bias im Netzwerk anhand der berechneten Gradienten und den Ausgangswerten
 \end{enumerate}
