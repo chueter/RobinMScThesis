@@ -1,6 +1,37 @@
+\newpage
 \subsection{Visualisierung der Entscheidung} \label{sec:visAlgos}
 
-\subsubsection{Activation Maximaztion} \label{sec:actMax}
+\subsubsection{Activation Maximization} \label{sec:actMax}
+\ac{AM} stellt eine Methode dar, um ein Bild $x^*$ als Eingabe für das \ac{CNN} zu erzeugen, welches die Ausgabe eines Neurons maximiert (siehe Gleichung \ref{eq:max_x*}, wobei $\theta$ für die Paramete - Gewichte und Bias -  des \ac{CNN} steht). Dabei kann \ac{AM} auf Neuronen aus jedem Layer eines \ac{CNN} angewendet werden. Weiter verbreitet ist die Anwendung auf den letzten Convolutional Layer, in welcher jedes Neuron für eine Klasse steht. In diesem Fall erzeugt \ac{AM} also ein Bild, welches die Ausgabe des Neurons für die Klasse $k$ maximiert. Anhand dieses Bildes können Rückschlüsse gezogen werden, was das \ac{CNN} gelernt hat um die Klasse $k$ zu erkennen.
+
+\begin{equation} \label{eq:max_x*}
+    x^{*}=\underset{x}{\operatorname{argmax}} a_{i, l}(\theta, x)
+\end{equation}
+
+Um das Bild zu generieren, wird ein iterativer Prozess verwendet. In diesem werden die Werte jedes Pixels im Bild in jedem Durchgang so angepasst, dass die Ausgabe des Zielneurons weiter maximiert wird. Der Prozess kann dabei in drei Schritte unterteilt werden:
+
+\begin{enumerate}
+	\item Es wird ein Bild $x = x_0$ mit zufälligen Werten für alle Pixel generiert (Rauschen). Dieses Bild wird dann in das \ac{CNN} gegeben, um einen vorwärts Durchlauf durchzuführen.
+    \item Mithilfe von Backpropagation wird die partielle Ableitung des Zielneurons $a_{i,l}$ im Bezug auf $x$ durchgeführt ($\frac{\partial a_{i, l}}{\partial x}$). Hierbei bleiben die Gewichte und Bias im \ac{CNN} unverändert.
+    \item Mithilfe des berechneten Gradienten werden alle Pixeln in $x$ angepasst, so dass die Aktivierung des Zielneurons weiter erhöht wird. Dabei wird mittels einer Schrittweite (auch Learning Rate, \eta) gesteuert, wie stark die Anpassungen sind (Gleichung \ref{eq:max_act}).
+    
+    \begin{equation} \label{eq:max_act}
+        x \leftarrow x+\eta \cdot \frac{\partial a_{i, l}(\theta, x)}{\partial x}
+    \end{equation}
+\end{enumerate}
+
+Der Prozess wird beendet, wenn im erzeugten Bild kein Rauschen mehr vorhanden ist. Da dies ein Zustand ist, der bei \ac{CNN} mit mehreren Layern selten erreicht wird, kann außerdem ein Schwellwert an Rauschen definiert werden, ab welchem der Prozess abbricht.
+
+Ein weiteres Problem von komplexen \ac{CNN} mit vielen Layern ist, dass die Muster in den späteren Layern für den Menschen immer weniger interpretierbar werden. Um diese Interpretierbarkeit zu erhöhen, können verschiedene Methoden zur regularisierung angewendet werden. Hierbei wird der Gleichung ein Term - $\lambda(x)$ -  hinzugefügt, der als Bias beim Erstellen des Bildes $x^*$ wirkt (siehe Gleichung \ref{eq:am_bias}).
+
+\begin{equation} \label{eq:am_bias}
+    x^{*}=\underset{x}{\operatorname{argmax}}\left(a_{i, l}(\theta, x)-\lambda(x)\right)
+\end{equation}
+
+Für \lambda(x) können verschiedene Methoden verwendet werden, bekannte Implementationen sind zum Beispiel \textit{$l_2$ decay,} \textit{Gaussian blur}, oder \textit{mean image initialization}.\footcite[Vgl.][1-8]{simonyanDeepConvolutionalNetworks2014}\footcite[Vgl.][1-12]{yosinskiUnderstandingNeuralNetworks2015}\footcite[Vgl.][1-7]{weiUnderstandingIntraClassKnowledge2015}
+Jede dieser Methoden hat seine eigenen Effekte, \textit{$l_2$ decay} verhindert zum Beispiel, dass einige extreme Pixelwerte das erzeugte Bild dominieren. Die verschiedenen Methoden können auch kombiniert werden, um die verschiedenen Effekte nutzen zu können.\footcite[Vgl.][S. 1-14]{erhanVisualizingDeepNetwork2009}
+
+
 % https://github.com/MisaOgura/flashtorch
 
 
@@ -9,9 +40,31 @@
 % Zenodo. http://doi.org/10.5281/zenodo.3596650
 
 
-\subsubsection{Backpropagation} \label{sec:backprop}
-% J. T. Springenberg, A. Dosovitskiy, T. Brox, and M. Riedmiller. Striving for Simplicity: The All Convolutional Net, https://arxiv.org/abs/1412.6806
+\subsubsection{Saliency Map} \label{sec:saliency_map}
+Während \ac{AM} den Fokus auf die Visualisierung der Aktivierung einzelner Neuronen legt, betrachtet \ac{SM} das gesamte \ac{CNN}. Die Grundidee hinter \ac{SM} ist es, die Pixel zu ermitteln, welche den größten Einfluss auf die Zuordnung in eine bestimmte Klasse haben. 
 
+Nimmt man ein Bild $I_0$, eine Klasse $c$ und ein trainiertes \ac{CNN} mit der Bewertungsfunktion $S_c(I)$, ist das Ziel alle Pixel nach ihrem Einfluss auf den Wert $S_c(I_0)$ zu sortieren. Im einfachen Fall einer linearen Bewertungsfunktion (siehe Gleichung \ref{eq:am_lin_bf}, mit $I$ als eindimensionaler Vektor des Bildes und $w_c$ bzw. $b_c$ als Parametervektoren des \ac{CNN}) gibt bereits die Größe der Gewichte $w$ an, wie wichtig die dazugehörigen Pixel für die Zuordnung in Klasse $c$ sind. 
+
+\begin{equation}
+    \label{eq:am_lin_bf}
+    S_{c}(I)=w_{c}^{T} I+b_{c}
+\end{equation}
+
+Die Bewertungsfunktion innerhalb eines \ac{CNN} ist allerdings eine nicht lineare Funktion, so dass dieses Prinzip nicht direkt übernommen werden kann. Geht man allerdings von dem Bild $I_0$ aus, kann sich dem Wert von $S_c(I)$ mit einer linearen Funktion genähert werden. Hierfür wird eine Taylorreihe erster Ordnung berechnet (siehe Gleichung \ref{eq:sm_taylor_reihe}, mit $w$ gleich $\left.\frac{\partial S_{c}}{\partial I}\right|_{I_{0}}$).
+
+\begin{equation}
+    \label{eq:sm_taylor_reihe}
+    S_{c}(I) \approx w^{T} I+b
+\end{equation}
+
+Eine mögliche Interpretation von $\left.\frac{\partial S_{c}}{\partial I}\right|_{I_{0}}$ ist, dass die Größe der Ableitung anzeigt, welche Pixel am wenigsten verändert werden müssen, um das Ergebnis der Bewertungsfunktion am stärksten zu verändern. Es wird davon ausgegangen, dass diese Pixel mit der Position des Objekt der bewerteten Klasse im Bild korrespondieren.
+
+Möchte man \ac{SM} auf ein Farbbild (z.B. im \ac{RGB} Farbraum, wobei jede Farbe ein eigener Layer im Eingabebild ist) anwenden, müssen zunächst die Ableitungen $w$ ($\left.\frac{\partial S_{c}}{\partial I}\right|_{I_{0}}$) mittels Backpropagation berechnet werden. Anschließend wird der maximale Wert der drei Layer als Wert für den Pixel in der \ac{SM} Matrix $M$ verwendet (siehe Gleichung \ref{eq:sm_max_rgb}, mit $w_{h(i,j,c)}$ als Index eines Pixel an der Position $i$, $j$ im Layer $c$).\footcite[Vgl.][S. 3f.]{simonyanDeepConvolutionalNetworks2014}
+
+\begin{equation}
+    \label{eq:sm_max_rgb}
+    M_{i j}=\max _{c}\left|w_{h(i, j, c)}\right|
+\end{equation}
 % Entweder vanilla oder saliency....
 
 % code: https://github.com/utkuozbulak/pytorch-cnn-visualizations
@@ -25,7 +78,27 @@
 %   commit = {47c6cd2121b4d0bcbe76f63abe9e13c5fb1ea0ff}
 % }
 
-\subsubsection{Gradient-weighted class activation mapping}
+\subsubsection{Class Activation Mapping}
+% Zhou hat im Paper noch eine Darstellung, ggf. einfügen falls nötig
+\ac{CAM} wurde 2016 von Zhou et al. vorgestellt und wird auf bereits trainierte \ac{CNN} angewendet. Das Ziel von \ac{CAM} ist es, innerhalb eines Bildes die relevanten Bereiche für die Zuordnung zu einer Klasse zu markieren. Damit \ac{CAM} verwendet werden kann, muss das \ac{CNN} einen bestimmten Aufbau haben. Nach dem letzten Convolutional Layer muss es einen \textit{Global Average Pooling Layer} vor dem \textit{fully-connected Layer} geben. 
+
+Der letzte Convolutional Layer erzeugt dabei $k$ Feature Maps, für jeden Kernel eine. Damit hat die Ausgabe des Convolutional Layers drei Dimensionen. Die Höhe $v$, die Breite $u$ und die Anzahl von Feature Maps $k$. Pro Feature Map wird Global Average Pooling angewendet, das heißt es wird der Mittelwert über alle Pixel in einer Feature Maps $A^k$ gebildet (siehe Gleichung \ref{eq:cam_avgpool}).
+
+\begin{equation}
+    \label{eq:cam_avgpool}
+    avgpool_k = \frac{1}{z} \sum_{i=1}^{u} \sum_{j=1}^{v} A_{i j}^{k}
+\end{equation}
+
+Nachdem Global Average Pooling auf alle Feature Maps angewendet wurde, bleibt ein Vektor mit $k$ Nummer über. Diese werden in einen fully-connected Layer gegeben. Die Gewichte $w$ zwischen dem Ergebnis des Global Average Pooling und dem fully-connected Layer, werden dabei während des Trainingprozesses des Netzwerkes gelernt.
+
+Zur Erzeugung der Ergebnis Matrix - bei visueller Darstellung auch Heatmap genannt - von \ac{CAM}, werden die gelernten Gewichte $w$ mit den Feature Maps aus der Aktivierung des letzten Convolutional Layers $A_k$ multipliziert. Zu beachten ist hierbei, dass \ac{CAM} die Aktivierung für das aktuelle Bild und auf eine angegebene Klasse darstellt. Gleichung \ref{eq:cam_res_mat} zeigt die Formel zur Berechnung von \ac{CAM} für die Klasse $c$.
+
+\begin{equation}
+    \label{eq:cam_res_mat}
+    cam_c = \sum_{k} w_k^cA^k
+\end{equation}
+
+Das Ergebnis von \ac{CAM} ist somit eine Matrix mit den Maßen der Feature Maps des letzten Convolutional Layer. Häufig wird dieses hochskaliert, so dass die Heatmap über das Originalbild gelegt werden kann.\footcite[Vgl.][S. 2-4]{zhouLearningDeepFeatures2016}
 % B. Zhou, A. Khosla, A. Lapedriza, A. Oliva, A. Torralba. Learning Deep Features for Discriminative Localization, https://arxiv.org/abs/1512.04150
 
 % R. R. Selvaraju, A. Das, R. Vedantam, M. Cogswell, D. Parikh, and D. Batra. Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization, https://arxiv.org/abs/1610.02391
