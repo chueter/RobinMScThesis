@@ -20,6 +20,7 @@
 		- [x] Local Receptive Fields (Teil Conv Layer)
 		- [x] Shared Weights and Biases (Teil Conv Layer)
 		- [x] Pooling
+		- [ ] Softmax
 		- [ ] Deconv
 - [ ] Visualisierung der Entscheidung
 	- [ ] Einleitung (Motivation Visualisierung & Ausschluss einiger Methoden)
