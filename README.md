@@ -27,7 +27,7 @@
 	- [x] Saliency Maps
 	- [ ] CAM
 		- [x] Vanilla
-		- [ ] Grad CAM
+		- [x] Grad CAM
 		- [ ] Grad CAM++
 - [ ] Auflistung verwendeter Bibiliotheken
 

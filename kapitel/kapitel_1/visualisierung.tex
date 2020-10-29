@@ -99,9 +99,30 @@ Zur Erzeugung der Ergebnis Matrix - bei visueller Darstellung auch Heatmap genan
 \end{equation}
 
 Das Ergebnis von \ac{CAM} ist somit eine Matrix mit den Maßen der Feature Maps des letzten Convolutional Layer. Häufig wird dieses hochskaliert, so dass die Heatmap über das Originalbild gelegt werden kann.\footcite[Vgl.][S. 2-4]{zhouLearningDeepFeatures2016}
-% B. Zhou, A. Khosla, A. Lapedriza, A. Oliva, A. Torralba. Learning Deep Features for Discriminative Localization, https://arxiv.org/abs/1512.04150
 
-% R. R. Selvaraju, A. Das, R. Vedantam, M. Cogswell, D. Parikh, and D. Batra. Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization, https://arxiv.org/abs/1610.02391
+Um die Beschränkung der Architektur des \ac{CNN} durch \ac{CAM} aufzuheben, haben Selvaraju et al. 2016 mit Grad-\ac{CAM} die Verallgemeinerung von \ac{CAM} vorgeschlagen.
+
+Bei dieser Verallgemeinerung benötigt das \ac{CNN} keinen Global Average Pooling Layer nach dem letzten Convolutional Layer mehr. Es kann ein beliebe Anzahl von Layern nach dem Convolutional Layer vorhanden sein, die einzige Bedingung für diese ist, dass sie differenzierbar sind. Laut den Autoren von Grad-\ac{CAM} wird dabei der letzte Convolutional Layer als Grundlage der Visualisierung verwendet, da zu erwarten ist, dass dieser das beste Gleichgewicht zwischen Interpretierbarkeit und räumlicher Auflösung bietet.
+
+Wie bei \ac{CAM}, werden alle $k$ Feature Maps gewichtet addiert um die Ergebnismatrix zu erhalten. Der Unterschied liegt in der Berechnung der Gewichte. Während \ac{CAM} die Gewichte $w$ des \ac{CNN} verwendet, berechnet Grad-\ac{CAM} eigene Gewichte $\alpha$, welche auf den Gradienten basieren.
+
+Als Grundlage für die $\alpha$ Werte verwendet Grad-\ac{CAM} die Ausgabewerte des \ac{CNN}, bevor diese in den Softmax Layer gegeben werden ($y^c$). Der eigentliche Prozess von Grad-\ac{CAM} kann in drei Schritte unterteilt werden Zunächst wird der Gradient von $y^c$ mit Bezug auf die Feature Maps $A^k$ berechnet ($\frac{\partial y^{c}}{\partial A^{k}}$). Dieser ist abhängig von dem aktuellen Eingabebild, da dieses die Grundlage für die Feature Maps und $y^c$ liefert. Wie bei \ac{CAM} ergibt ein zweidimensionalles Eingabebild ein dreidimensionallen Gradienten ($v$, $u$, $k$). Im zweiten Schritt werden die $\alpha$ Werte berechnet. Jede Feature Map $k$ erhält dabei einen Wert für die gewählte Klasse $c$ ($\alpha_{k}^{c}$). Für diesen Wert wird über die Höhe und Breite der Feature Map gelaufen um Global Average Pooling durchzuführen (siehe Gleichung \ref{eq:grad_cam_avg_pool}). Dies bedeutet, das am Ende dieses Schrittes eine Matrix mit der Form [1,1,$k$] oder vereinfacht der Vektor [$k$] vorliegt. Jede Feature Map hat somit einen $\alpha$ Wert, der als Gewicht verwendet werden kann. 
+
+\begin{equation}
+    \label{eq:grad_cam_avg_pool}
+    \alpha_{k}^{c}={\frac{1}{Z} \sum_{i=0}^{u}\sum_{j=0}^{v}} \frac{\partial y^{c}}{\partial A_{i j}^{k}}
+\end{equation}
+
+Im dritten Schritt wird nun die Ergebnismatrix von Grad-\ac{CAM} berechnet. Diese ist die lineare Kombination der gewichteten Feature Maps, wobei das Ergebnis in die ReLU Funktion gegeben wird (siehe Gleichung \ref{eq:grad_cam_rel}).
+Die ReLU Funktion sorgt dabei dafür, dass nur positive Werte einbezogen werden, da alle negativen Werte auf $0$ gesetzt werden.
+
+\begin{equation}
+    \label{eq:grad_cam_rel}
+    L_{\mathrm{Grad-CAM}}^{c}=\operatorname{ReLU}\left(\sum_{k} \alpha_{k}^{c} A^{k}\right)
+\end{equation}
+
+Wie bei \ac{CAM} hat die Ergebnismatrix/Heatmap von Grad-\ac{CAM} die Form $u$ x $x$, sie muss also hoch skaliert werden, damit sie über das Eingangsbild gelegt werden kann.\footcite[Vgl.][S. 4-6]{selvarajuGradCAM2020}
+
 
 % code: https://github.com/utkuozbulak/pytorch-cnn-visualizations
 % @misc{uozbulak_pytorch_vis_2019,
