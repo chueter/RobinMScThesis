@@ -93,6 +93,9 @@
 - [x] Saliency Maps
 - [x] Grad Cam
 - [ ] Grad Cam++
+- [X] Grid Position berechnen
+- [X] Grid Overlay
+- [ ] Haupt Gridfeld highlighten
 
 ### Sonstiges
 - [x] Skript anwenden der Vis Algos (neue Lagos müssen ggf. ergänzt werden)
