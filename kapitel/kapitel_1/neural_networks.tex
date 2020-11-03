@@ -2,7 +2,7 @@
 \subsection{Neural Networks} \label{sec:NN}
 In den letzten Jahren gab es eine Vielzahl von Fortschritten durch Computersysteme, die häufig unter dem Begriff \ac{KI} zusammen gefasst werden. So konnte zum Beispiel AlphaGo einen der weltweit besten Spieler in dem Brettspiel Go schlagen und das System DeepFace ist in der Lage, menschliche Gesichter nahezu auf menschlichen Niveau erkennen zu können.\footcites[Vgl.][]{spiegelGoogleComputerAlphaGo2016}\footcite[Vgl.][]{taigman2014deepface}
 
-Systeme die als \ac{KI} bezeichnet werden, sind häufig in der Lage, Aufgaben zu bewältigen, die bisher ausschließlich durch das menschliche Gehirn bearbeitet werden konnten. Neben den oben genannten Beispielen zählt hier auch das Erkennen von Bildern oder Sprache dazu. Damit Computer diese Aufgaben erledigen können, haben Wissenschaftler sich vom menschlichen bzw. biologischen Gehirn inspirieren lassen. Systeme, die auf dieser Grundlage basieren und einige der Vorgehensweisen des Gehirnen imitieren, werden als \ac{NN} bezeichnet.
+Systeme die als \ac{KI} bezeichnet werden, sind häufig in der Lage, Aufgaben zu bewältigen, die bisher ausschließlich durch das menschliche Gehirn bearbeitet werden konnten. Neben den oben genannten Beispielen zählt hier auch das Erkennen von Bildern oder Sprache dazu. Damit Computer diese Aufgaben erledigen können, haben Wissenschaftler sich vom menschlichen bzw. biologischen Gehirn inspirieren lassen. Systeme, die auf dieser Grundlage basieren und einige der Vorgehensweisen des Gehirns imitieren, werden als \ac{NN} bezeichnet.
 
 \subsubsection{Aufbau}
 Die grundlegenden Bausteine von \ac{NN} sind Perceptron und wurden 1958 von Rosenblatt beschrieben.\footcite[Vgl.][]{rosenblattPerceptronProbabilisticModel1958} Als Grundlage verwendete er hierbei unter anderem die Arbeit von McCulloch und Pitts.\footcite[Vgl.][]{mccullochLogicalCalculusIdeas1943}
@@ -50,7 +50,7 @@ Die grundlegenden Bausteine von \ac{NN} sind Perceptron und wurden 1958 von Rose
     Quelle: Eigene Darstellung, 2020
 \end{figure}
 
-Ein Perceptron kann zwischen $1$ und $n$ Eingangssignalen sowie einen negativen Bias Term\footnote{Einige Defintionen schreiben nicht vor, dass der Bias negativ sein muss. Stattdessen wird dieser im weiteren Vorgehen subtrahiert statt summiert zu werden} $b$ erhalten und hieraus ein Ausgangssignal - auch Aktivierung genannt - erzeugen. Für das Ausgangssignal werden alle Eingangssignale jeweils mit einem eigenen - als Gewicht bezeichneten - Faktor multipliziert (siehe Abbildung \ref{fig:perceptron}). Die Ergebnisse werden anschließend zusammen mit dem Bias summiert. Ist die Summe kleiner oder gleich $0$, ist der Ausgangswert ebenfalls $0$, ansonsten beträgt der Ausgangswert $1$. Der Bias stellt also den Schwellwert dar, den die gewichtete Summe überschreiten muss, damit das Ausgangssignal $1$ lautet. 
+Ein Perceptron kann zwischen $1$ und $n$ Eingangssignalen sowie einen negativen Bias Term\footnote{Einige Definitionen schreiben nicht vor, dass der Bias negativ sein muss. Stattdessen wird dieser im weiteren Vorgehen subtrahiert statt summiert zu werden} $b$ erhalten und hieraus ein Ausgangssignal - auch Aktivierung genannt - erzeugen. Für das Ausgangssignal werden alle Eingangssignale jeweils mit einem eigenen - als Gewicht bezeichneten - Faktor multipliziert (siehe Abbildung \ref{fig:perceptron}). Die Ergebnisse werden anschließend zusammen mit dem Bias summiert. Ist die Summe kleiner oder gleich $0$, ist der Ausgangswert ebenfalls $0$, ansonsten beträgt der Ausgangswert $1$. Der Bias stellt also den Schwellenwert dar, der von der gewichtete Summe überschritten werden muss, damit das Ausgangssignal $1$ lautet. 
 
 Es ist möglich, ein Perceptron um eine Aktivierungsfunktion zu ergänzen, sodass das Ausgabesignal reelle Werte annehmen kann. Diese Erweiterung des Perceptron wird als Neuron bezeichnet. Weit verbreitet ist die Verwendung der Sigmoid Funktion (siehe Gleichung \ref{eq:sigmoid}). Bei der Anwendung einer Aktivierungsfunktion, häufig mit $\sigma$ dargestellt, wird die gewichtete Summe $z$ in die gewählte Funktion gegeben und das Ergebnis stellt das Ausgangssignal des Neuron dar (siehe Gleichung \ref{eq:outputNeuron}).
 
@@ -327,7 +327,7 @@ Die Ergebnisse für $\frac{\partial C }{\partial w^{(L-1)}}$  bzw. $\frac{\parti
     2(a^{(L)}-y)
 \end{equation}
 
-Nachdem nun alle Einflüsse auf den Output Layer berechnet sind, kann ein Schritt weiter zurück gegangen werden. Im \ac{NN} aus Abbildung \ref{fig:simpleNetwork} ist dies der Input Layer $L-2$. Die explizite Darstellung aller Einflüsse inklusive diesem Layer ist in Abbildung \ref{fig:unfoldedCost2} dargestellt. Wie zu sehen ist, wurden nur die zwei Spalten ganz links zum Diagramm aus Abbildung \ref{fig:unfoldedCost} hinzugefügt. Dank der Kettenregel, spiegelt sich dies auch in den Gleichungen für die neuen Elemente $w^{(L-2)}$, $a^{(L-2)}$, $b^{(L-2)}$ und $z^{(L-1)}$ wieder. In Gleichung \ref{eq:calcWL-2} ist die Berechnung für den Einfluss des Gewichts $w^{(L-2)}$ dargestellt.
+Nachdem nun alle Einflüsse auf den Output Layer berechnet sind, kann ein Schritt weiter zurück gegangen werden. Im \ac{NN} aus Abbildung \ref{fig:simpleNetwork} ist dies der Input Layer $L-2$. Die explizite Darstellung aller Einflüsse inklusive diesem Layer ist in Abbildung \ref{fig:unfoldedCost2} dargestellt. Wie zu sehen ist, wurden nur die zwei Spalten ganz links zum Diagramm aus Abbildung \ref{fig:unfoldedCost} hinzugefügt. Dank der Kettenregel, spiegelt sich dies auch in den Gleichungen für die neuen Elemente $w^{(L-2)}$, $a^{(L-2)}$, $b^{(L-2)}$ und $z^{(L-1)}$ wieder. In Gleichung \ref{eq:calcWL-2} wird die Berechnung für den Einfluss des Gewichts $w^{(L-2)}$ dargestellt.
 
 \begin{equation} \label{eq:calcWL-2}
     \frac{\partial C }{\partial w^{(L-2)}} = 
@@ -378,7 +378,7 @@ Der letzte Term des mittleren bzw. letzten Teils der Gleichung stellt dabei das 
 
 Typischerweise haben \ac{NN} mehr als ein Neuron pro Layer, daher müssen die oben genannten Formeln noch leicht angepasst werden. In Gleichungen \ref{eq:forwardMulti} sind die Formeln für das Vorwärtsdurchlaufen des \ac{NN} dargestellt. Da nun mehrere Neuronen im Output Layer vorhanden sind - $N_L$ - muss über diese summiert werden. Anschließend muss für den quadratischen Mittelwert noch durch die Anzahl der Neuronen geteilt werden (siehe Formel 1 in Abbildung \ref{eq:forwardMulti}).
 
-Auch die gewichtet Summe in jedem Neuron hängt nun von allen Aktivierungen des vorherigen Layer ($N_{(L-1)}$) ab, so dass hier ebenfalls über diese summiert werden muss. Da es nun mehrere Neuronen pro Layer - und somit mehrere gewichtete Summen pro Layer - gibt, wird mittels dem Index  $j$ noch spezifiziert, welches Neuronen gerade berechnet wird.
+Auch die gewichtete Summe in jedem Neuron hängt nun von allen Aktivierungen des vorherigen Layer ($N_{(L-1)}$) ab, so dass hier ebenfalls über diese summiert werden muss. Da es nun mehrere Neuronen pro Layer - und somit mehrere gewichtete Summen pro Layer - gibt, wird mittels dem Index  $j$ noch spezifiziert, welches Neuron gerade berechnet wird.
 
 \begin{equation} \label{eq:forwardMulti}
     \begin{split}
