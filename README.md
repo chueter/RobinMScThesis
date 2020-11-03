@@ -92,9 +92,9 @@
 	- [ ] Optional: Mit Generator
 - [x] Saliency Maps
 - [x] Grad Cam
-- [ ] Grad Cam++
-- [X] Grid Position berechnen
-- [X] Grid Overlay
+- [x] Grad Cam++
+- [x] Grid Position berechnen
+- [x] Grid Overlay
 - [ ] Haupt Gridfeld highlighten
 
 ### Sonstiges
